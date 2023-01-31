@@ -15,9 +15,6 @@ public class Unit : MonoBehaviour
 
 
     [SerializeField] private Animator unitAnimator;
-    private MoveAction moveAction;
-    private SpinAction spinAction;
-    private ShootAction shootAction;
     private HealthSystem healthSystem;
     private GridPosition gridPosition;
     private BaseAction[] baseAcitionArray;
@@ -26,9 +23,6 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
-        moveAction = GetComponent<MoveAction>();
-        spinAction = GetComponent<SpinAction>();
-        shootAction = GetComponent<ShootAction>();
         baseAcitionArray = GetComponents<BaseAction>();
     }
 
@@ -57,21 +51,19 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public MoveAction GetMoveAction()
+    public T GetActions<T>() where T : BaseAction
     {
-        return moveAction;
+        foreach(BaseAction baseaction in baseAcitionArray)
+        {
+            if(baseaction is T)
+            {
+                return (T)baseaction;
+            }
+        }
+        return null;
     }
 
-    public SpinAction GetSpinAction()
-    {
-        return spinAction;
-    }
-
-    public ShootAction GetShootAction()
-    {
-        return shootAction;
-    }
-
+    
     public GridPosition GetGridPosition()
     {
         return gridPosition;
