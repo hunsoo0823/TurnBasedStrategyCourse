@@ -13,10 +13,13 @@ public class Testing : MonoBehaviour
 
     private void Update()
     {
+        /*
        if(Input.GetKeyDown(KeyCode.T))
        {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
             GridPosition startGridPostion = new GridPosition(0, 0);
+
+            Debug.Log(mouseGridPosition + " " + startGridPostion);
 
             List<GridPosition> gridPostionList = Pathfinding.Instance.FindPath(startGridPostion, mouseGridPosition);
 
@@ -30,6 +33,7 @@ public class Testing : MonoBehaviour
                 );
             }
        }
+       */
     }
 
 
