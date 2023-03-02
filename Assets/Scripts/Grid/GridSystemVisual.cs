@@ -63,7 +63,7 @@ public class GridSystemVisual : MonoBehaviour
         LevelGrid.Instance.OnAnyUnitMovedGridPosition += LevelGrid_OnAnyUnitMovedGridPosition;
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
 
-        UpdateGridVisual();
+        UpdateGridVisual(); 
     }
 
     public void HideAllGridPosition()
@@ -104,6 +104,28 @@ public class GridSystemVisual : MonoBehaviour
         ShowGridPositionList(girdPositionList, gridVisualType);
     }
 
+    private void ShowGridPositionRangeSquare(GridPosition gridPostion, int range, GridVisualType gridVisualType)
+    {
+        List<GridPosition> girdPositionList = new List<GridPosition>();
+        for (int x = -range; x <= range; x++)
+        {
+            for (int z = -range; z <= range; z++)
+            {
+                GridPosition testGridPosition = gridPostion + new GridPosition(x, z);
+
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                {
+                    continue;
+                }
+
+                girdPositionList.Add(testGridPosition);
+            }
+        }
+
+        ShowGridPositionList(girdPositionList, gridVisualType);
+    }
+
+
     public void ShowGridPositionList(List<GridPosition> gridPositionList, GridVisualType gridVisualType)
     {
         foreach(GridPosition gridPosition in gridPositionList)
@@ -133,10 +155,16 @@ public class GridSystemVisual : MonoBehaviour
             case ShootAction shootAction:
                 gridVisualType = GridVisualType.Red;
                 ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft);
-
+                break;
+            case GrenadeAction grenadeAction:
+                gridVisualType = GridVisualType.Yellow;
+                break;
+            case SwordAction swordAction:
+                gridVisualType = GridVisualType.Red;
+                ShowGridPositionRange(selectedUnit.GetGridPosition(), swordAction.GetMaxShootDistance(), GridVisualType.RedSoft);
                 break;
         }
-
+         
         ShowGridPositionList(selectedAction.GetVaildActionGridPositionList(), gridVisualType);
     }
 
